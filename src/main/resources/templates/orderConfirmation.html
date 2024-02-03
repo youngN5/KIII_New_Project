@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Ordered Ticket - Confirmation</title>
+  <style type="text/css">
+    body {
+      width: 800px;
+      margin: auto;
+    }
+
+    table {
+      width: 100%;
+    }
+
+    table, td, th {
+      border: 1px solid black;
+      padding: 3px 2px;
+    }
+  </style>
+</head>
+<body>
+<section>
+  <header>
+    <h1>Movie Order page - Order confirmation </h1>
+  </header>
+  <ul th:each="ticket: ${tickets}">
+    <li>
+      <table>
+        <tr>
+          <th colspan="2">
+            Your Order Status
+          </th>
+        </tr>
+        <tr>
+          <td><b>Ticket for Movie</b></td>
+          <td th:text="${ticket.getMovieTitle()}"></td>
+        </tr>
+        <tr>
+          <td><b>Number of tickets</b></td>
+          <td th:text="${ticket.getNumberOfTickets()}"></td>
+        </tr>
+        <tr>
+          <td><b>Date of Creation</b></td>
+          <td th:text="${ticket.getCreated()}"></td>
+        </tr>
+        <tr>
+          <form th:action="@{'/shopping-cart/add-ticket/{id}' (id=${ticket.getId()})}"
+                th:method="POST">
+            <button type="submit" class="btn btn-sm btn-success"><i class="fas fa-shopping-cart">Add to Cart</i></button>
+          </form>
+
+        </tr>
+      </table>
+    </li>
+  </ul>
+</section>
+<section>
+  <form th:method="post" th:action="@{'/ticketOrder'}">
+    <span>Search by movie title and rating</span><br/>
+    <input type="text" name="movieTitle" id="searchText">
+    <input type="number" name="numOfTickets" id="searchNumOfTickets">
+    <input type="submit" value="Search">
+  </form>
+  <a th:href="@{'/movies'}">Back</a>
+</section>
+<section>
+  <form th:method="post" th:action="@{'/ticketOrder/between'}">
+    <label for="from">From</label>
+    <input type="datetime-local" id="from" name="from">
+    <label for="to">To</label>
+    <input type="datetime-local" id="to" name="to">
+    <button type="submit">Submit</button>
+  </form>
+</section>
+</body>
+</html>

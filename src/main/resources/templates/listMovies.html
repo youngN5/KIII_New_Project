@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Movie Ticket Order page - Welcome and choose a Movie</title>
+  <style type="text/css">
+    body {
+      width: 800px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Welcome to our Movie Ticket Shop App</h1>
+</header>
+<main>
+  <form th:method="post" th:action="@{/movies}">
+    <span>Search by name and rating</span><br/>
+    <input type="text" name="title" id="searchText">
+    <input type="number" name="rating" id="searchRating">
+    <input type="submit" value="Search">
+  </form>
+
+  <th:block>
+    <a href="/movies/add" class="btn btn-primary">Add Movie</a>
+  </th:block>
+
+  <h3 style="color:red">
+    <th:block
+            th:if="${error}!=null"
+            th:text="${error}">
+    </th:block>
+  </h3>
+  <h2>Choose movie:</h2>
+  <!-- Display radio buttons for each movie,
+          the value should be the movie title
+          and the displayed text should be Title: <movie_title>, Summary:<movie_summary>, Rating: <movie_rating> -->
+
+  <form th:method="post" th:action="@{/movies/placeOrder}">
+    <ul th:each="movie: ${movies}">
+      <li>
+        <input type="radio" th:value="${movie.getTitle()}" th:name="selectedMovie"/>
+        <span th:text="'Title: ' + ${movie.getTitle()} + ' Summary: ' + ${movie.getSummary()} + ' Rating: ' + ${movie.getRating()} + ' Production: '+ ${movie.getProduction().getName()}"></span>
+        <th:block>
+          <!-- <form th:method="delete" th:action="@{'/movies/delete/{id}' (id=${movie.getId()})}">
+               <button class="btn btn-danger">Delete</button>
+           </form>-->
+          <a th:href="@{'/movies/delete/{id}' (id=${movie.getId()})}" class="btn btn-primary">Delete</a>
+        </th:block>
+        <th:block>
+          <a th:href="@{'/movies/edit/{movieId}' (movieId=${movie.getId()})}" class="btn btn-primary">Edit</a>
+        </th:block>
+      </li>
+    </ul>
+
+    <h2>Choose number of tickets:</h2>
+    <label for="numTickets">Number of Tickets</label>
+    <input type="number" name="numTickets" min="1" max="10" id="numTickets"><br/>
+    <label for="created">Date of Creation</label>
+    <input type="datetime-local" name="created" id="created">
+    <br/>
+    <input type="submit" value="Submit">
+  </form>
+
+
+
+</main>
+</body>
+</html>

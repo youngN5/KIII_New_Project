@@ -1,0 +1,13 @@
+#version: "3"
+#services:
+#  lab-db:
+#    image: "postgres"
+#    container_name: "lab"
+#    environment:
+#      - POSTGRES_USER:lab
+#      - POSTGRES_PASSWORD:vebprogramiranje
+#      - POSTGRES_DB:cinema
+#    ports:
+#      - "5432:5432"
+#    volumes:
+#      - ./postgres-data:/var/lib/postgresql/data

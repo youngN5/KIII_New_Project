@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Productions</title>
+  <style type="text/css">
+    body {
+      width: 800px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>Welcome to our Movie Ticket Shop App</h1>
+</header>
+<main>
+
+  <th:block>
+    <a href="/productions/add" class="btn btn-primary">Add Productions</a>
+  </th:block>
+
+  <h3 style="color:red">
+    <th:block
+            th:if="${error}!=null"
+            th:text="${error}">
+    </th:block>
+  </h3>
+  <h2>Choose movie:</h2>
+  <!-- Display radio buttons for each movie,
+          the value should be the movie title
+          and the displayed text should be Title: <movie_title>, Summary:<movie_summary>, Rating: <movie_rating> -->
+
+  <ul th:each="production: ${productions}">
+    <li>
+      <span th:text="'Name: ' + ${production.getName()} + ' Country: ' + ${production.getCountry()} + ' Address: ' + ${production.getAddress()}"></span>
+      <th:block>
+        <a th:href="@{'/productions/delete/{id}' (id=${production.getId()})}" class="btn btn-primary">Delete</a>
+      </th:block>
+      <th:block>
+        <a th:href="@{'/productions/edit-form/{prodId}' (prodId=${production.getId()})}" class="btn btn-primary">Edit</a>
+      </th:block>
+    </li>
+  </ul>
+</main>
+</body>
+</html>
